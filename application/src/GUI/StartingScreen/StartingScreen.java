@@ -2,6 +2,8 @@ package GUI.StartingScreen;
 
 
 
+import GUI.Main.MainWindow;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,12 +33,16 @@ public class StartingScreen extends JFrame
     {
         boolean loginSuccesful=false;
 
-        if(login.equals("igor"));
-            if (pass.equals("haslo")) {
+        if(login.equals("igor"))
+        {
+            if (pass.equals("haslo"))
+            {
                 loginSuccesful = true;
-                System.out.println("udalo sie");
+                MainWindow app = new MainWindow(login);
+                run(app, "APLIKACJA", 600, 800);
                 dispose();
             }
+        }
         else
             {
                 System.out.println("ZLE PASSY PACANIE");
