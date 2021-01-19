@@ -148,7 +148,7 @@ public class StartingScreen extends JFrame
     }
 
     public static void main(String[] args) {
-        run(new StartingScreen(), 300, 140);
+        run(new MainWindow("LOGIN"), 600, 800);
     }
 
 }
