@@ -26,8 +26,8 @@ public class MainWindow extends JFrame
             }
         });
         this.user = user;
-        tabs.addTab("main tab",tab1);
-        tabs.addTab("tab 2", tab2);
+        tabs.addTab("TAB 1",tab1);
+        tabs.addTab("TAB 2", tab2);
         add(tabs);
 
     }

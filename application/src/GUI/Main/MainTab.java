@@ -1,5 +1,7 @@
 package GUI.Main;
 
+import Database.DatabaseHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +15,14 @@ public class MainTab extends JPanel
         privilegesCheckBox2 = new JCheckBox("privileges2"),
         employeesCheckBox2 = new JCheckBox("employees2");
     private JButton selectButton = new JButton("Generate Select");
+    private JLabel name = new JLabel("name");
+    private JTextField nameField = new JTextField(30);
+    private JLabel surname = new JLabel("surname");
+    private JTextField surnameField = new JTextField(30);
+    private JButton addButton = new JButton("add employee");
+    private  JButton getButton = new JButton("get employees");
+    private DatabaseHandler database = new DatabaseHandler();
+    private int id = 1;
 
 
 
@@ -60,11 +70,29 @@ public class MainTab extends JPanel
         add(employeesCheckBox);
         add(employeesCheckBox2);
         add(selectButton);
+        add(name);
+        add(nameField);
+        add(surname);
+        add(surnameField);
+        add(addButton);
+        add(getButton);
 
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(checkSelects());
+            }
+        });
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                database.addEmployee(id++,nameField.getText(),surnameField.getText());
+            }
+        });
+        getButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                database.printEmployees();
             }
         });
     }

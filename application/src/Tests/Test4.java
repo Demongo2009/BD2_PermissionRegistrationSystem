@@ -1,7 +1,8 @@
-package tests;
+package Tests;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Random;
 
 public class Test4 extends Test
@@ -13,8 +14,17 @@ public class Test4 extends Test
         try
         {
             connect();
-            int [][]months = new int[12][6];
-            String []czynnosci = new String[6];
+
+            //sprawdzamy ile jest dostepnych czynnosci w systemie
+            PreparedStatement activitiesGetter = conn.prepareStatement("SELECT COUNT(*) FROM CZYNNOSCI");
+            ResultSet rs = activitiesGetter.executeQuery();
+            rs.next();
+            int activitiesCount = rs.getInt(1);
+            //zapamietujemy ich liczbe w zmiennej
+
+
+            int [][]activitiesInMonthCount = new int[12][activitiesCount];
+            String []activities = new String[activitiesCount];
             int []popularCount = new int[12];
             int []popularIndex = new int[12];
 
@@ -26,12 +36,19 @@ public class Test4 extends Test
             PreparedStatement czynn = conn.prepareStatement("SELECT NAZWA_CZYNNOSCI, NUMER\n" +
                     "FROM CZYNNOSCI\n" +
                     "ORDER BY 2");
-            ResultSet rs = czynn.executeQuery();
-            for(int i=0;i<6;i++)
+            rs = czynn.executeQuery();
+            //Pobieramy nazwy czynnosci
+            for(int i=0;i<activitiesCount;i++)
             {
                 rs.next();
-                czynnosci[i] = rs.getString(1);
+                activities[i] = rs.getString(1);
             }
+            System.out.println("\tCzynnsoci w systemie wraz z numerami:");
+            for(int i =0;i<activitiesCount;i++)
+            {
+                System.out.println("["+(i+1)+"] "+activities[i]);
+            }
+            System.out.println("\n\n\n");
 
             //miesiace
             for(int i =1;i<=12;i++)
@@ -41,36 +58,38 @@ public class Test4 extends Test
                 int j =0;
                 while(rs.next())
                 {
-                    months[i-1][j++] = rs.getInt(2);
+                    activitiesInMonthCount[i-1][j++] = rs.getInt(2);
                 }
             }
             for(int i =1;i<=12;i++)
             {
                 int max=0;
                 int maxIndex=1;
-                for(int j = 0;j<6;j++)
+                for(int j = 0;j<activitiesCount;j++)
                 {
-                    if(months[i-1][j]>max)
+                    if(activitiesInMonthCount[i-1][j]>max)
                     {
-                        max = months[i-1][j];
+                        max = activitiesInMonthCount[i-1][j];
                         maxIndex=j;
                     }
                     popularCount[i-1]=max;
                     popularIndex[i-1]=maxIndex;
                 }
-                System.out.println(i+" miesiac najppopularniejsza:\t"+czynnosci[maxIndex]);
+                System.out.println(i+" miesiac najppopularniejsza:\t"+activities[maxIndex]);
             }
             //dla kazdego miesiaca wiemy jaka najpopularniejsza i ile razy wykonana czynnosc byla
             Random random = new Random();
-            int selectedMonth = random.nextInt(12); //losujemy jakis miesiac
+            int selectedMonth = random.nextInt(12)+1; //losujemy jakis miesiac
 //            System.out.println("WYLOSOWANO:"+selectedMonth );
-            int mostPopular = popularIndex[selectedMonth]; // w tym miesiacu ta czynnosc najpopularniejsza
+            int mostPopular = popularIndex[selectedMonth-1]; // w tym miesiacu ta czynnosc najpopularniejsza
             int otherActivity=mostPopular;
+
             while (otherActivity==mostPopular)
             {
-                otherActivity = random.nextInt(6)+1;
+                otherActivity = random.nextInt(18)+1;
             }
             String subs = String.format("2021/%02d/12 20:20:20",selectedMonth); // wybieramy ze wstawiamy w tym miesiacu
+
             czynn = conn.prepareStatement("INSERT INTO Historie_wykonania_Czynnosci(DATA,STATUS_WYKONANIA,UWAGI,CZYNNOSC_NUMER,RODZAJ_UPRAWNIENIA,KONTO_PRACOWNIKA_ID_KONTA)\n" +
                     "VALUES ( TO_DATE(?,?), 'wykonana', 'uwaga', ?, 1, 42)");
 
@@ -93,24 +112,24 @@ public class Test4 extends Test
                 int j =0;
                 while(rs.next())
                 {
-                    months[i-1][j++] = rs.getInt(2);
+                    activitiesInMonthCount[i-1][j++] = rs.getInt(2);
                 }
             }
             for(int i =1;i<=12;i++)
             {
                 int max=0;
                 int maxIndex=1;
-                for(int j = 0;j<6;j++)
+                for(int j = 0;j<activitiesCount;j++)
                 {
-                    if(months[i-1][j]>max)
+                    if(activitiesInMonthCount[i-1][j]>max)
                     {
-                        max = months[i-1][j];
+                        max = activitiesInMonthCount[i-1][j];
                         maxIndex=j;
                     }
                     popularCount[i-1]=max;
                     popularIndex[i-1]=maxIndex;
                 }
-                System.out.println(i+" miesiac najppopularniejsza:\t"+czynnosci[maxIndex]);
+                System.out.println(i+" miesiac najppopularniejsza:\t"+activities[maxIndex]);
             }
             disconnect();
         } catch (Exception e)
@@ -118,7 +137,7 @@ public class Test4 extends Test
             e.printStackTrace();
             return false;
         }
-    return  true;
+        return  true;
     }
 
 

@@ -1,4 +1,4 @@
-package tests;
+package Tests;
 
 public class Tester
 {
@@ -9,7 +9,8 @@ public class Tester
     {
         Tester tester = new Tester();
         tester.tests[0].performTest();
-        System.out.println("\n\n");
-        tester.tests[1].performTest();
+
+//        System.out.println("\n\n");
+//        tester.tests[1].performTest();
     }
 }
