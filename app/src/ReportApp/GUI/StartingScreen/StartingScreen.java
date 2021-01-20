@@ -1,15 +1,15 @@
-package GUI.StartingScreen;
+package ReportApp.GUI.StartingScreen;
 
 
 
-import GUI.Main.MainWindow;
+import ReportApp.GUI.Main.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static GUI.tools.SwingConsole.run;
+import static ReportApp.GUI.tools.SwingConsole.run;
 
 
 //import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;

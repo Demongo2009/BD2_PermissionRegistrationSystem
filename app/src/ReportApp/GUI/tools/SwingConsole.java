@@ -1,4 +1,4 @@
-package GUI.tools;
+package ReportApp.GUI.tools;
 
 import javax.swing.*;
 

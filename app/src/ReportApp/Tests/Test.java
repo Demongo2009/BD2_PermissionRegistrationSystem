@@ -1,6 +1,4 @@
-package Tests;
-
-import oracle.jdbc.proxy.annotation.Pre;
+package ReportApp.Tests;
 
 import java.sql.*;
 

@@ -1,4 +1,4 @@
-package Tests;
+package ReportApp.Tests;
 
 import java.sql.*;
 

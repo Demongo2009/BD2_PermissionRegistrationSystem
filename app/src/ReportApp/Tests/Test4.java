@@ -1,8 +1,7 @@
-package Tests;
+package ReportApp.Tests;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Random;
 
 public class Test4 extends Test

@@ -1,4 +1,7 @@
-package Database;
+package ReportApp.Database;
+
+import ReportApp.GUI.tools.Actions;
+import ReportApp.GUI.tools.Departments;
 
 import java.sql.*;
 
@@ -84,6 +87,34 @@ public class DatabaseHandler
         }
 
 
+    }
+
+
+    public String generateActionCounterReport(Boolean groupDepartments, Actions action, Departments department){
+        String result = "";
+
+        //TODO:
+        PreparedStatement statement = null;
+        Connection conn = null;
+        ResultSet  rs = null;
+        try {
+            conn = DriverManager.getConnection(url);
+
+            statement = conn.prepareStatement("SELECT COUNT(*),cz.nazwa " +
+                    "FROM Historie_wykonania_czynnosci AS h JOIN Czynnosci AS cz ON h.czynnosc_numer == cz.numer GROUP BY czynnosc_numer");
+//            statement.setInt(1, id);
+//            statement.setString(2,name);
+//            statement.setString(3,surname);
+            statement.executeUpdate();
+
+            rs.close();
+            statement.close();
+            conn.close();
+        }catch( Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
 

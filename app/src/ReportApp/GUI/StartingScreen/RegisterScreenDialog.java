@@ -1,4 +1,4 @@
-package GUI.StartingScreen;
+package ReportApp.GUI.StartingScreen;
 
 import javax.swing.*;
 import java.awt.*;
