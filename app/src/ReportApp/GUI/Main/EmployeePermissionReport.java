@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainTab extends JPanel
+public class EmployeePermissionReport extends JPanel
 {
     private JCheckBox
             groupCheckBox = new JCheckBox("grupuj działy");
@@ -32,7 +32,7 @@ public class MainTab extends JPanel
 
 
 
-    public  MainTab()
+    public  EmployeePermissionReport()
     {
         setLayout(new FlowLayout());
         add(groupCheckBox);
