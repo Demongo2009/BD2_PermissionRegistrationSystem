@@ -8,8 +8,8 @@ public class MainWindow extends JFrame
 {
     private JTabbedPane tabs = new JTabbedPane();
     private JPanel tab1 = new MainTab();
-    private JPanel tab2 = new JPanel();
-    private JPanel tab3 = new JPanel();
+    private JPanel tab2 = new EmployeePermissionReport();
+    private JPanel tab3 = new HistoryOfPermission();
     private JPanel tab4 = new JPanel();
     private JPanel tab5 = new JPanel();
     private JPanel tab6 = new JPanel();

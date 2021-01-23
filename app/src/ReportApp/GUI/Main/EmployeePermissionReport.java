@@ -14,17 +14,16 @@ public class EmployeePermissionReport extends JPanel
     private JCheckBox
             groupCheckBox = new JCheckBox("grupuj działy");
     private JCheckBox
-            actionCheckBox = new JCheckBox("policz tylko zaznaczoną akcje");
+            permissionTypeCheckBox = new JCheckBox("policz tylko zaznaczony rodzaj uprawnien");
     private JCheckBox
             departmentCheckBox = new JCheckBox("policz tylko w zaznaczonym dziale");
-    String[] actionList = {"Potwierdzenie faktury","Wypelnienie dokument", "Wyslanie dokumentu do urzedu",
-            "Wykonanie przelewu","Zakup na potrzeby firmy","Usunięcie konta użytkownika","Dodanie konta użytkownika",
-            "Zawieszenie konta użytkownika","Zarawcie umowy z klientem","Przekazanie produktu klientowi",
-            "Przeprowadzenie spotkania z kandydatem","Podpisanie umowy z nowym pracownikiem",
-            "Awans pracownika","Zwolnienie pracownika","Podwyżka pensji pracownika"
+    String[] permissionTypeList = {"Zarzadzanie dokumentami finansowymi","Zarządzanie rachunkiem firmowym", "Dostęp do systemu X",
+            "Dostęp do systemu Y","Dostęp do systemu X z pełnym zakresem","Dostęp do systemu Y z pełnym zakresem","Prowadzenie negocjacji z klientem",
+            "Dostęp do tajemnicy X","Dostęp do tajemnicy Y","Zarządzanie rekturacją",
+            "Zarządzanie zasobami ludzkimi","Zarządzanie aktywami firmy",
     };
     String[] departmentList = {"IT","Finansowy","Zarzadzanie","Marketing"};
-    private JComboBox actionsComboBox = new JComboBox(actionList);
+    private JComboBox permissionTypeComboBox = new JComboBox(permissionTypeList);
     private JComboBox departmentComboBox = new JComboBox(departmentList);
     private JButton generateButton = new JButton("Wygeneruj Raport");
     private DatabaseHandler database = new DatabaseHandler();
@@ -36,9 +35,9 @@ public class EmployeePermissionReport extends JPanel
     {
         setLayout(new FlowLayout());
         add(groupCheckBox);
-        add(actionCheckBox);
+        add(permissionTypeCheckBox);
         add(departmentCheckBox);
-        add(actionsComboBox);
+        add(permissionTypeComboBox);
         add(departmentComboBox);
         add(generateButton);
         add(textArea);
@@ -49,10 +48,10 @@ public class EmployeePermissionReport extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String text = database.generateActionCounterReport(groupCheckBox.isSelected(),
-                        actionCheckBox.isSelected(),
+                String text = database.generateEmployeePermissionReport(groupCheckBox.isSelected(),
+                        permissionTypeCheckBox.isSelected(),
                         departmentCheckBox.isSelected(),
-                        (String)actionsComboBox.getSelectedItem(),
+                        (String)permissionTypeComboBox.getSelectedItem(),
                         (String)departmentComboBox.getSelectedItem());
 
                 textArea.setText(text);
