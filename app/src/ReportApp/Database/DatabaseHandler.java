@@ -373,6 +373,162 @@ public class DatabaseHandler {
         return result;
     }
 
+
+    public String generateActionInMonthReport(Boolean groupDepartments, Boolean onlyAction, Boolean onlyDepartment,
+                                              Boolean inMonth, Boolean inYear, String action, String department,
+                                              String month, String year) {
+        String result = "";
+
+
+        PreparedStatement statement = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        try {
+            conn = DriverManager.getConnection(url, nickname, password);
+            String statementText = "";
+
+            String whereString = "WHERE ( cz.nazwa_czynnosci = ? OR 1=1 ) ";
+            String groupString = "GROUP BY h.data, cz.nazwa_czynnosci ";
+            String selectSting = "SELECT h.data AS hData, cz.nazwa_czynnosci AS nazwa,COUNT(*) AS rowCount ";
+            String orderString = "ORDER BY h.data ";
+
+            if (groupDepartments) {
+                selectSting = "SELECT h.data AS hData, dz.nazwa AS dzNazwa, cz.nazwa_czynnosci AS nazwa,COUNT(*) AS rowCount ";
+                groupString = "GROUP BY dz.nazwa, h.data, cz.nazwa_czynnosci ";
+                orderString = "ORDER BY h.data,dz.nazwa ";
+            }
+
+            int counter =1;
+            int monthIndex =1;
+            int yearIndex =1;
+            int actionIndex =1;
+            int departmentIndex =1;
+            if (inMonth) {
+                whereString += "AND EXTRACT(month FROM h.data) = ? ";
+                counter++;
+                monthIndex = counter;
+            }
+            if(inYear){
+                whereString += "AND EXTRACT(year FROM h.data) = ? ";
+                counter++;
+                yearIndex = counter;
+            }
+            if (onlyAction) {
+                whereString += "AND cz.nazwa_czynnosci = ? ";
+                counter++;
+                actionIndex = counter;
+            }
+            if (onlyDepartment) {
+                whereString += "AND dz.nazwa = ? ";
+                counter++;
+                departmentIndex = counter;
+            }
+
+
+            statementText = selectSting +
+                    "FROM Historie_wykonania_czynnosci h " +
+                    "JOIN Czynnosci cz ON h.czynnosc_numer = cz.numer " +
+                    "JOIN Konta_pracownikow kp ON h.konto_pracownika_id_konta = kp.id_konta " +
+                    "JOIN Stanowiska st ON kp.stanowisko_id = st.id " +
+                    "JOIN Dzialy dz ON st.dzial_id = dz.id " +
+                    whereString +
+                    groupString + orderString;
+            System.out.println(statementText);
+            statement = conn.prepareStatement(statementText);
+
+
+            int monthNumber = 0;
+            switch (month){
+                case "Styczeń":
+                    monthNumber=1;
+                    break;
+                case "Luty":
+                    monthNumber=2;
+                    break;
+                case "Marzec":
+                    monthNumber=3;
+                    break;
+                case "Kwiecień":
+                    monthNumber=4;
+                    break;
+                case "Maj":
+                    monthNumber=5;
+                    break;
+                case "Czerwiec":
+                    monthNumber=6;
+                    break;
+                case "Lipiec":
+                    monthNumber=7;
+                    break;
+                case "Sierpień":
+                    monthNumber=8;
+                    break;
+                case "Wrzesień":
+                    monthNumber=9;
+                    break;
+                case "Październik":
+                    monthNumber=10;
+                    break;
+                case "Listopad":
+                    monthNumber=11;
+                    break;
+                case "Grudzień":
+                    monthNumber=12;
+                    break;
+
+            }
+
+            statement.setString(actionIndex, action);
+            statement.setString(departmentIndex, department);
+            statement.setInt(monthIndex, monthNumber);
+            statement.setInt(yearIndex, (int)Integer.parseInt(year));
+
+
+            statement.executeQuery();
+
+            rs = statement.getResultSet();
+
+            System.out.println(rs);
+            if(rs == null){
+                result += "błąd";
+                return result;
+            }
+
+            if(groupDepartments){
+                while (rs.next()) {
+                    result += rs.getString("hData");
+                    result += ": ";
+                    result += rs.getString("dzNazwa");
+                    result += ": ";
+                    result += rs.getString("nazwa");
+                    result += ": ";
+                    result += rs.getInt("rowCount");
+                    result += "\n";
+                }
+            }else{
+                while (rs.next()) {
+                    result += rs.getString("hData");
+                    result += ": ";
+                    result += rs.getString("nazwa");
+                    result += ": ";
+                    result += rs.getInt("rowCount");
+                    result += "\n";
+                }
+            }
+
+
+
+
+            rs.close();
+            statement.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public void printEmployees() {
 //        PreparedStatement statement = null;
 //        Connection conn = null;
