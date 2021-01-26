@@ -4,15 +4,69 @@ import java.sql.*;
 
 public class DatabaseHandler
 {
-    private static String url = "jdbc:oracle:thin:@localhost:1521:xe";
+    private final static String url = "jdbc:oracle:thin:@localhost:1521:xe";
     private static String nickname = "c##bd_acc";
     private static String password = "haslo";
+    private Connection conn = null;
 
+    public void setNickname(String nick)
+    {
+        nickname = nick;
+    }
+
+    public void setPassword(String pass)
+    {
+        password = pass;
+    }
     void add_permission()
     {
 
     }
 
+
+    public Connection connect()  {
+
+
+        try {
+            conn = DriverManager.getConnection(url, nickname, password);
+        } catch (SQLException e) {
+            //System.out.println("Connection Failed! Incorrect credentials");
+            //e.printStackTrace();
+            return null;
+
+        }
+        return conn;
+    }
+
+    public boolean checkLoginPassword(String login, String pass)
+    {
+        try{
+//            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM konta_pracownikow WHERE login = ? AND haslo = ?");
+//            stmt.setString(1, login);
+//            stmt.setString(2, pass);
+            Statement statement = conn.createStatement();
+            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM konta_pracownikow");
+
+          //  System.out.println(stmt.);
+            ResultSet rs = statement.executeQuery("SELECT * FROM PRACOWNICY");
+            ResultSet rs2 = stmt.executeQuery();
+            System.out.println("aa");
+            while (rs.next())
+            {
+                System.out.println(rs.getString(2));
+               System.out.println(rs.getString(1));
+                System.out.println(rs.getInt(0));
+                System.out.println(rs2.getInt(0));
+                System.out.println(rs2.getInt(1));
+                System.out.println("aa");
+            }
+            System.out.println("aa");
+        }catch (Exception e){
+
+        }
+        return true;
+
+    }
     public static void main(String[] args)
     {
 
@@ -93,15 +147,17 @@ public class DatabaseHandler
         Connection conn = null;
         ResultSet  rs = null;
         try {
-            conn = DriverManager.getConnection(url);
-
-            statement = conn.prepareStatement("INSERT INTO EMPLOYEES VALUES(?,?,?)");
-            statement.setInt(1, id);
-            statement.setString(2,name);
-            statement.setString(3,surname);
+            System.out.println("statement");
+            conn = DriverManager.getConnection(url, nickname, password);
+            System.out.println("statement");
+            statement = conn.prepareStatement("INSERT INTO PRACOWNICY(nazwisko, imie) VALUES(?,?)");
+           // statement.setInt(1, id);
+            statement.setString(1,name);
+            statement.setString(2,surname);
+            System.out.println(statement);
             statement.executeUpdate();
 
-            rs.close();
+            //rs.close();
             statement.close();
             conn.close();
         }catch( Exception e){
@@ -135,11 +191,19 @@ public class DatabaseHandler
 //        }catch(Exception e){
 //            e.printStackTrace();
 //        }
+
+
+
         try {
             Connection connection = DriverManager.getConnection(url, nickname, password);
-            String sql = "SELECT * FROM PRACOWNIK";
+            //String sql = "SELECT * FROM PRACOWNICY";
+            CallableStatement cs = connection.prepareCall("{call dodaj_uprawnienie_pracownika('Eugeniusz', 'Szyszka', 'Dostęp do tajemnicy Y')}");
+            cs.executeQuery();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            PreparedStatement stmt = connection.prepareStatement("SELECT ? FROM ?");
+            //ResultSet rs = statement.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery();
+
             while (rs.next())
             {
                 int id = rs.getInt(1);

@@ -3,11 +3,13 @@ package GUI.StartingScreen;
 
 
 import GUI.Main.MainWindow;
+import Database.DatabaseHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 import static GUI.tools.SwingConsole.run;
 
@@ -29,26 +31,26 @@ public class StartingScreen extends JFrame
      * Once user entered all his data, its send to the server and decides what to do next
      * @return true when login successes
      */
-    private boolean CheckLoginPassword()
+    private void CheckLoginPassword()
     {
-        boolean loginSuccesful=false;
+        DatabaseHandler dbh = new DatabaseHandler();
+//        dbh.setPassword(pass);
+//        dbh.setNickname(login);
 
-        if(login.equals("igor"))
-        {
-            if (pass.equals("haslo"))
-            {
-                loginSuccesful = true;
-                MainWindow app = new MainWindow(login);
-                run(app, "APLIKACJA", 600, 800);
-                dispose();
-            }
+        Connection connection = dbh.connect();
+        dbh.checkLoginPassword(login, pass);
+        if(connection != null) {
+            MainWindow app = new MainWindow(login);
+            run(app, "APLIKACJA", 600, 800);
+            dispose();
         }
         else
         {
-            System.out.println("ZLE PASSY PACANIE");
+            JOptionPane.showMessageDialog(null, "Niepoprawne dane",
+                    "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
         }
 
-        return loginSuccesful;
+
 
 //            boolean loginSuccesful=false;
 //            try
@@ -110,11 +112,13 @@ public class StartingScreen extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
+
                 LoginScreenDialog dlg = new LoginScreenDialog(null);
                 dlg.setSize(300,180);
                 dlg.setVisible(true);
                 login = dlg.getLogin();
                 pass = dlg.getPassword();
+
                 CheckLoginPassword();
             }
         });
@@ -147,8 +151,10 @@ public class StartingScreen extends JFrame
         getRootPane().setDefaultButton(loginButton);
     }
 
-    public static void main(String[] args) {
-        run(new MainWindow("login"), 600, 800);
+    public static void main(String[] args)
+    {
+        run(new StartingScreen(), 600, 800);
+        //run(new MainWindow("login"), 600, 800);
     }
 
 }

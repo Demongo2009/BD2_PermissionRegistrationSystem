@@ -26,8 +26,10 @@ public class MainWindow extends JFrame
             }
         });
         this.user = user;
-        tabs.addTab("TAB 1",tab1);
-        tabs.addTab("TAB 2", tab2);
+        tabs.addTab("Dodawanie uprawnienia", tab1);
+        tabs.addTab("Usuwanie uprawnienia", tab2);
+        tabs.addTab("TAB 1", tab1);
+        tabs.addTab("TAB 1", tab1);
         add(tabs);
 
     }
