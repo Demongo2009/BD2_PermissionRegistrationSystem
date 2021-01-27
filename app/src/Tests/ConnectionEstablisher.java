@@ -8,22 +8,12 @@ public class ConnectionEstablisher
     private static String nickname = "c##bd_acc";
     private static String password = "haslo";
 
-    public static Connection establish() throws SQLException
-    {
+    public static Connection establish() throws SQLException {
         return DriverManager.getConnection(url, nickname, password);
     }
-    public static boolean disconnect(Connection conn)
-    {
-        try
-        {
-            conn.close();
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+
+    public static void disconnect(Connection conn) throws SQLException {
+        conn.close();
     }
 
 }

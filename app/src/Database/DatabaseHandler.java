@@ -124,6 +124,7 @@ public class DatabaseHandler
 
         } catch (Exception e)
         {
+            e.printStackTrace();
             //TODO: handle exception
         }
 

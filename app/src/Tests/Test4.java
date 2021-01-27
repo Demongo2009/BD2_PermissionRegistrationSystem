@@ -8,7 +8,6 @@ import java.util.Random;
 public class Test4 extends Test
 {
 
-    @Override
     boolean performTest()
     {
         try
@@ -143,7 +142,7 @@ public class Test4 extends Test
 
     public static void main(String[] args)
     {
-        Test tmp = new Test4();
-        tmp.performTest();
+//        Test tmp = new Test4();
+//        tmp.performTest();
     }
 }
