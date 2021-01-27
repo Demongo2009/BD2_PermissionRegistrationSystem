@@ -54,7 +54,7 @@ public class Test {
             statement.executeQuery();
             statement.close();
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return false;
         }
         return true;
@@ -70,7 +70,7 @@ public class Test {
             statement.executeQuery();
             statement.close();
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return false;
         }
         return true;
@@ -129,7 +129,7 @@ public class Test {
             statement.executeQuery();
             statement.close();
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return false;
         }
         return true;
@@ -155,14 +155,93 @@ public class Test {
         return true;
     }
 
+    protected static boolean insertActivity(String name, int permId){
+        PreparedStatement statement = null;
+        try{
+            statement = conn.prepareStatement("INSERT INTO czynnosci" +
+                    "(nazwa_czynnosci, rodzaj_uprawnienia_id) VALUES " +
+                    "(?, ?)");
+            statement.setString(1, name);
+            statement.setInt(2, permId);
+
+            statement.executeQuery();
+            statement.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    protected static boolean insertActivityPerformenceHistory(int actId, int permId, int accId){
+        PreparedStatement statement = null;
+        //String date = "";
+        String status = "dokończono";
+
+        try{
+            statement = conn.prepareStatement("INSERT INTO historie_wykonania_czynnosci" +
+                    "(data, status_wykonania, czynnosc_numer, rodzaj_uprawnienia, konto_pracownika_ID_konta) VALUES " +
+                    "(TO_CHAR(SYSDATE, 'DD-MON-YYYY'), ?, ?, ?, ?)");
+            //statement.setString(1, date);
+            statement.setString(1, status);
+            statement.setInt(2, actId);
+            statement.setInt(3, permId);
+            statement.setInt(4, accId);
+
+
+            statement.executeQuery();
+            statement.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    protected static boolean deletePositionPermission(int permId, int posId){
+        PreparedStatement statement = null;
+        try{
+            statement = conn.prepareStatement("DELETE FROM uprawnienia_stanowisk " +
+                    "WHERE rodzaj_uprawnienia_id=? AND stanowisko_id=?");
+            statement.setInt(1, permId);
+            statement.setInt(2, posId);
+            statement.executeQuery();
+            statement.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    protected static boolean deleteEmployeePermission(int permId, int accId){
+        PreparedStatement statement = null;
+        try{
+            statement = conn.prepareStatement("DELETE FROM Uprawnienia_pracownikow " +
+                    "WHERE Konto_pracownika_ID_konta=? AND Rodzaj_uprawnienia_ID=?");
+            statement.setInt(1, accId);
+            statement.setInt(2, permId);
+            statement.executeQuery();
+            statement.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+
+
+
 
 
     static String dep1 = "Dev";
     static int dep1Id = 1;
 
     ////////////////////////////////////
-    static String perm1 = "jazda bez trzymanki",
-            perm2 = "jazda z trzymanką";
+    static String perm1 = "uje",
+            perm2 = "essa";
     static int perm1Id = 1,
             perm2Id = 2;
     ////////////////////////////////////
@@ -201,4 +280,10 @@ public class Test {
             acc3Id = 3,
             acc4Id = 4;
     //////////////////////////////////////
+    static String act1 = "kodzenie po nocach",
+            act2= "księgowanie";
+    static int act1Id = 1,
+                act2Id = 2;
+
+
 }
