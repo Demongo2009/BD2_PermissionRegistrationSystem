@@ -75,7 +75,7 @@ public class Test4 extends Test
                     popularCount[i-1]=max;
                     popularIndex[i-1]=maxIndex;
                 }
-                System.out.println(i+" miesiac najppopularniejsza:\t"+activities[maxIndex]);
+                System.out.println(i+" miesiac najppopularniejsza:\t"+activities[maxIndex-1]);
             }
             //dla kazdego miesiaca wiemy jaka najpopularniejsza i ile razy wykonana czynnosc byla
             Random random = new Random();

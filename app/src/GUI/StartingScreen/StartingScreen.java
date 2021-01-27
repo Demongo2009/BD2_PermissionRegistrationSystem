@@ -14,8 +14,6 @@ import java.sql.Connection;
 import static GUI.tools.SwingConsole.run;
 
 
-//import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
-
 public class StartingScreen extends JFrame
 {
     private String STARTING_SCREEN_TITLE = "BAZA BAZY DANYCH";
@@ -25,81 +23,62 @@ public class StartingScreen extends JFrame
     private JLabel OperationState =  new JLabel("");
     private String login="";
     private String pass="";
-    static String username = null;
+    DatabaseHandler dbh = null;
+    Connection connection = null;
 
     /**
      * Once user entered all his data, its send to the server and decides what to do next
      * @return true when login successes
      */
-    private void CheckLoginPassword()
+    private boolean CheckLoginPassword()
     {
-        DatabaseHandler dbh = new DatabaseHandler();
-//        dbh.setPassword(pass);
-//        dbh.setNickname(login);
 
-        Connection connection = dbh.connect();
-        dbh.checkLoginPassword(login, pass);
+
+        if(dbh.checkLoginPassword(login, pass)) {
+            JOptionPane.showMessageDialog(null, "Logowanie powiodło się.",
+                    "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
+        }else{
+            return false;
+        }
         if(connection != null) {
             MainWindow app = new MainWindow(login);
             run(app, "APLIKACJA", 600, 800);
             dispose();
+            return true;
         }
         else
         {
             JOptionPane.showMessageDialog(null, "Niepoprawne dane",
                     "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
+            return false;
         }
 
-
-
-//            boolean loginSuccesful=false;
-//            try
-//            {
-//                sendLoginOrRegisterRequest(login, pass, ClientToServerMessageType.REQUEST_LOGIN);
-//
-//                if(receiveLoginAnswer())
-//                {
-//                    OperationState.setText("Succesfully signed in :)");
-//                    MainWindow MainClientApp = new MainWindow(login);
-//                    run(MainClientApp, STARTING_SCREEN_TITLE, 600, 600);
-//                    dispose();
-//                    loginSuccesful=true;
-//                }
-//                else
-//                {
-//                    OperationState.setForeground(Color.RED);
-//                    OperationState.setText("TRY AGAIN");
-//                    loginSuccesful=false;
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                OperationState.setText("<html>"+e.getMessage()+"</html>");
-//                //e.printStackTrace();
-//            }
-//            return loginSuccesful;
 
     }
 
     /**
      *
      */
-    private void CheckRegister()
+    private boolean CheckRegister()
     {
-//            try
-//            {
-//                sendLoginOrRegisterRequest(login, pass, ClientToServerMessageType.REQUEST_REGISTER);
-//                MainWindow MainClientApp = new MainWindow(login);
-//                receiveLoginAnswer();
-//                OperationState.setText("Succesfully signed up");
-//                run(MainClientApp, STARTING_SCREEN_TITLE, 600, 600);
-//                dispose();
-//            }
-//            catch (Exception e)
-//            {
-//                OperationState.setText("<html>"+e.getMessage()+"</html>");
-//                //e.printStackTrace();
-//            }
+        if(dbh.checkLoginPassword(login, pass)) {
+            JOptionPane.showMessageDialog(null, "Logowanie powiodło się.",
+                    "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
+        }else{
+            return false;
+        }
+        if(connection != null) {
+            MainWindow app = new MainWindow(login);
+            run(app, "APLIKACJA", 600, 800);
+            dispose();
+            return true;
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Niepoprawne dane",
+                    "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
+            return false;
+        }
     }
 
     public StartingScreen( )
@@ -112,26 +91,38 @@ public class StartingScreen extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                boolean cond = false;
+                while(!cond) {
+                    LoginScreenDialog dlg = new LoginScreenDialog(null);
+                    dlg.setSize(300,180);
+                    dlg.setVisible(true);
+                    login = dlg.getLogin();
+                    pass = dlg.getPassword();
+                    cond = CheckLoginPassword();
+                    if(!cond)
+                        JOptionPane.showMessageDialog(null, "Niepoprawne dane logowania.",
+                                "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
 
-                LoginScreenDialog dlg = new LoginScreenDialog(null);
-                dlg.setSize(300,180);
-                dlg.setVisible(true);
-                login = dlg.getLogin();
-                pass = dlg.getPassword();
-
-                CheckLoginPassword();
+                }
             }
         });
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                RegisterScreenDialog dlg = new RegisterScreenDialog(null);
-                dlg.setSize(300,250);
-                dlg.setVisible(true);
-                login = dlg.getLogin();
-                pass = dlg.getPassword();
-                CheckRegister();
+                boolean cond = false;
+                while(!cond) {
+                    RegisterScreenDialog dlg = new RegisterScreenDialog(null);
+                    dlg.setSize(300,250);
+                    dlg.setVisible(true);
+                    login = dlg.getLogin();
+                    pass = dlg.getPassword();
+                    cond = CheckRegister();
+                    if(!cond)
+                        JOptionPane.showMessageDialog(null, "Niepoprawne dane logowania.",
+                                "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
+
+                }
             }
         });
 
@@ -149,6 +140,9 @@ public class StartingScreen extends JFrame
         add(panel);
         loginButton.requestFocus();
         getRootPane().setDefaultButton(loginButton);
+
+        dbh = new DatabaseHandler();
+        connection = dbh.connect();
     }
 
     public static void main(String[] args)

@@ -30,7 +30,7 @@ public class DatabaseHandler
         try {
             conn = DriverManager.getConnection(url, nickname, password);
         } catch (SQLException e) {
-            //System.out.println("Connection Failed! Incorrect credentials");
+            System.out.println("Connection Failed! Incorrect credentials");
             //e.printStackTrace();
             return null;
 
@@ -41,31 +41,21 @@ public class DatabaseHandler
     public boolean checkLoginPassword(String login, String pass)
     {
         try{
-//            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM konta_pracownikow WHERE login = ? AND haslo = ?");
-//            stmt.setString(1, login);
-//            stmt.setString(2, pass);
-            Statement statement = conn.createStatement();
-            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM konta_pracownikow");
-
-          //  System.out.println(stmt.);
-            ResultSet rs = statement.executeQuery("SELECT * FROM PRACOWNICY");
-            ResultSet rs2 = stmt.executeQuery();
-            System.out.println("aa");
-            while (rs.next())
-            {
-                System.out.println(rs.getString(2));
-               System.out.println(rs.getString(1));
-                System.out.println(rs.getInt(0));
-                System.out.println(rs2.getInt(0));
-                System.out.println(rs2.getInt(1));
-                System.out.println("aa");
+            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM konta_pracownikow WHERE login = ? AND haslo = ?");
+            stmt.setString(1, login);
+            stmt.setString(2, pass);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            if(rs.getInt(1) != 1){
+                throw new Exception("niepoprawny login lub/i hasło");
+            }else{
+                return true;
             }
-            System.out.println("aa");
+
         }catch (Exception e){
-
+            e.printStackTrace();
+            return false;
         }
-        return true;
-
     }
     public static void main(String[] args)
     {
