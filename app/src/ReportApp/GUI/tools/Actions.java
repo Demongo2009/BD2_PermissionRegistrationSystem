@@ -44,4 +44,41 @@ public enum Actions {
                 return POTWIERDZENIE_FAKTURY;
         }
     }
+
+    static public int actionToInt(Actions action){
+        switch (action){
+            case POTWIERDZENIE_FAKTURY:
+                return 0;
+            case WYPELNIENIE_DOKUMENT:
+                return 1;
+            case WYSLANIE_DOKUMENTU_DO_URZEDU:
+                return 2;
+            case WYKONANIE_PRZELEWU:
+                return 3;
+            case ZAKUP_NA_POTRZEBY_FIRMY:
+                return 4;
+            case USUNIĘCIE_KONTA_UŻYTKOWNIKA:
+                return 5;
+            case DODANIE_KONTA_UŻYTKOWNIKA:
+                return 6;
+            case ZAWIESZENIE_KONTA_UŻYTKOWNIKA:
+                return 7;
+            case ZARAWCIE_UMOWY_Z_KLIENTEM:
+                return 8;
+            case PRZEKAZANIE_PRODUKTU_KLIENTOWI:
+                return 9;
+            case PRZEPROWADZENIE_SPOTKANIA_Z_KANDYDATEM:
+                return 10;
+            case PODPISANIE_UMOWY_Z_NOWYM_PRACOWNIKIEM:
+                return 11;
+            case AWANS_PRACOWNIKA:
+                return 12;
+            case ZWOLNIENIE_PRACOWNIKA:
+                return 13;
+            case PODWYŻKA_PENSJI_PRACOWNIKA:
+                return 14;
+            default:
+                return 0;
+        }
+    }
 }

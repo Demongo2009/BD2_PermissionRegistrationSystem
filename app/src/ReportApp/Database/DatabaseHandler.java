@@ -148,6 +148,7 @@ public class DatabaseHandler {
                     result += ": ";
                     result += rs.getInt("rowCount");
                     result += "\n";
+
                 }
             }else{
                 while (rs.next()) {
