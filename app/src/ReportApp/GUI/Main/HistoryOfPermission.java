@@ -25,20 +25,23 @@ public class HistoryOfPermission extends JPanel
     private JButton refreshEmployeesButton = new JButton("Zaktualizuj pracowników");
     private DatabaseHandler database = new DatabaseHandler();
     private JTextArea textArea = new JTextArea(16,40);
-
+    private JScrollPane textAreaWrap = new JScrollPane(textArea);
 
 
     public  HistoryOfPermission()
     {
-        setLayout(new FlowLayout());
-//        add(groupCheckBox);
-//        add(permissionTypeCheckBox);
-//        add(departmentCheckBox);
+        setLayout(null);
+
+
+        employeeComboBox.setBounds(40,30,300,40);
+        generateButton.setBounds(220,540,200,50);
+        textAreaWrap.setBounds(640,30,580,600);
+
         add(employeeComboBox);
 //        add(departmentComboBox);
         add(generateButton);
         add(refreshEmployeesButton);
-        add(textArea);
+        add(textAreaWrap);
 
         textArea.setLineWrap(true);
 

@@ -39,25 +39,46 @@ public class CountingActionsInMonth extends JPanel
     private JButton generateButton = new JButton("Wygeneruj Raport");
     private DatabaseHandler database = new DatabaseHandler();
     private JTextArea textArea = new JTextArea(16,40);
+    private JScrollPane textAreaWrap = new JScrollPane(textArea);
 
 
 
     public  CountingActionsInMonth()
     {
-        setLayout(new FlowLayout());
-        add(groupCheckBox);
-        add(actionCheckBox);
+        setLayout(null);
+
+        groupCheckBox.setBounds(40,30,300,40);
+
+        actionCheckBox.setBounds(40,80,300,40);
+        actionsComboBox.setBounds(80,130,280,40);
+
+        departmentCheckBox.setBounds(40,180,300,40);
+        departmentComboBox.setBounds(80,230,100,40);
+
+        monthCheckBox.setBounds(40,280,300,40);
+        monthsComboBox.setBounds(80,330,150,40);
+
+        yearCheckBox.setBounds(40,380,300,40);
+        yearsComboBox.setBounds(80,430,150,40);
+
+
+        generateButton.setBounds(220,540,200,50);
+
+
+        textAreaWrap.setBounds(640,30,580,600);
+
+        add(groupCheckBox);//
+        add(actionCheckBox);//
         add(monthCheckBox);
         add(yearCheckBox);
-        add(departmentCheckBox);
-        add(actionsComboBox);
-        add(departmentComboBox);
+        add(departmentCheckBox);//
+        add(actionsComboBox);//
+        add(departmentComboBox);//
         add(monthsComboBox);
         add(yearsComboBox);
-        add(generateButton);
-        add(textArea);
+        add(generateButton);//
+        add(textAreaWrap);//
 
-        textArea.setLineWrap(true);
 
         generateButton.addActionListener(new ActionListener() {
             @Override
