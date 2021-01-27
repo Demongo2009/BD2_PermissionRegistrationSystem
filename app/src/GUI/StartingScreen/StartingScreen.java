@@ -59,24 +59,13 @@ public class StartingScreen extends JFrame
     /**
      *
      */
-    private boolean CheckRegister()
+    private boolean CheckRegister(String name, String surname, String position)
     {
-        if(dbh.checkLoginPassword(login, pass)) {
-            JOptionPane.showMessageDialog(null, "Logowanie powiodło się.",
+        if(dbh.registerEmployee(login, pass, name, surname, position)) {
+            JOptionPane.showMessageDialog(null, "Rejestracja powiodla się.",
                     "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
-        }else{
-            return false;
-        }
-        if(connection != null) {
-            MainWindow app = new MainWindow(login);
-            run(app, "APLIKACJA", 600, 800);
-            dispose();
             return true;
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Niepoprawne dane",
-                    "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
+        }else{
             return false;
         }
     }
@@ -92,18 +81,16 @@ public class StartingScreen extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 boolean cond = false;
-                while(!cond) {
-                    LoginScreenDialog dlg = new LoginScreenDialog(null);
-                    dlg.setSize(300,180);
-                    dlg.setVisible(true);
-                    login = dlg.getLogin();
-                    pass = dlg.getPassword();
-                    cond = CheckLoginPassword();
-                    if(!cond)
-                        JOptionPane.showMessageDialog(null, "Niepoprawne dane logowania.",
-                                "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
 
-                }
+                LoginScreenDialog dlg = new LoginScreenDialog(null);
+                dlg.setSize(300,180);
+                dlg.setVisible(true);
+                login = dlg.getLogin();
+                pass = dlg.getPassword();
+                cond = CheckLoginPassword();
+                if(!cond)
+                    JOptionPane.showMessageDialog(null, "Niepoprawne dane logowania.",
+                            "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
             }
         });
         registerButton.addActionListener(new ActionListener() {
@@ -111,18 +98,19 @@ public class StartingScreen extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 boolean cond = false;
-                while(!cond) {
-                    RegisterScreenDialog dlg = new RegisterScreenDialog(null);
-                    dlg.setSize(300,250);
-                    dlg.setVisible(true);
-                    login = dlg.getLogin();
-                    pass = dlg.getPassword();
-                    cond = CheckRegister();
-                    if(!cond)
-                        JOptionPane.showMessageDialog(null, "Niepoprawne dane logowania.",
-                                "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
+                RegisterScreenDialog dlg = new RegisterScreenDialog(null);
+                dlg.setSize(300,500);
+                dlg.setVisible(true);
+                login = dlg.getLogin();
+                pass = dlg.getPassword();
+                String name = dlg.getInputName();
+                String surname = dlg.getSurname();
+                String position = dlg.getPosition();
+                cond = CheckRegister(name, surname, position);
+                if(!cond)
+                    JOptionPane.showMessageDialog(null, "Rejestracja nie powiodla sie.",
+                            "Informacja", JOptionPane.INFORMATION_MESSAGE, null);
 
-                }
             }
         });
 

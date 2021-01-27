@@ -53,10 +53,30 @@ public class DatabaseHandler
             }
 
         }catch (Exception e){
+//            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean registerEmployee(String login, String pass, String name, String surname, String position)
+    {
+        try{
+            CallableStatement cs = conn.prepareCall("{call zarejestruj_pracownika(?, ?, ?, ?, ?)}");
+            cs.setString(1, login);
+            cs.setString(2, pass);
+            cs.setString(3, name);
+            cs.setString(4, surname);
+            cs.setString(5, position);
+
+            cs.executeQuery();
+
+            return true;
+        }catch (Exception e){
             e.printStackTrace();
             return false;
         }
     }
+
     public static void main(String[] args)
     {
 
