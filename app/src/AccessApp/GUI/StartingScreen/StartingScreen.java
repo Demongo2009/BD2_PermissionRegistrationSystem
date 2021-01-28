@@ -41,7 +41,7 @@ public class StartingScreen extends JFrame
             return false;
         }
         if(connection != null) {
-            MainWindow app = new MainWindow(login);
+            MainWindow app = new MainWindow(login,connection);
             run(app, "APLIKACJA", 600, 800);
             dispose();
             return true;
@@ -135,7 +135,7 @@ public class StartingScreen extends JFrame
 
     public static void main(String[] args)
     {
-        run(new StartingScreen(), 600, 800);
+        run(new StartingScreen(), 1280, 720);
         //run(new MainWindow("login"), 600, 800);
     }
 

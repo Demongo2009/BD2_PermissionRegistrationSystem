@@ -1,6 +1,7 @@
 package AccessApp.Database;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseHandler
 {
@@ -77,6 +78,9 @@ public class DatabaseHandler
         }
     }
 
+
+
+
     public static void main(String[] args)
     {
 
@@ -136,7 +140,7 @@ public class DatabaseHandler
                     }
 
                 }
-                System.out.println("Najpopularniejsza w miesiacu "+i+"-tym czynnosc: "+maxIndex);
+                System.out.println("Najpopularniejsza w miesiacu "+i+"-tym czynnosc: "+maxIndex + " - "+max);
             }
 
             conn.close();
@@ -162,7 +166,7 @@ public class DatabaseHandler
             conn = DriverManager.getConnection(url, nickname, password);
             System.out.println("statement");
             statement = conn.prepareStatement("INSERT INTO PRACOWNICY(nazwisko, imie) VALUES(?,?)");
-           // statement.setInt(1, id);
+            // statement.setInt(1, id);
             statement.setString(1,name);
             statement.setString(2,surname);
             System.out.println(statement);
