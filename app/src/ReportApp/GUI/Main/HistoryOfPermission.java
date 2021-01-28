@@ -36,6 +36,7 @@ public class HistoryOfPermission extends JPanel
         employeeComboBox.setBounds(40,30,300,40);
         generateButton.setBounds(220,540,200,50);
         textAreaWrap.setBounds(640,30,580,600);
+        refreshEmployeesButton.setBounds(220,480,300,40);
 
         add(employeeComboBox);
 //        add(departmentComboBox);

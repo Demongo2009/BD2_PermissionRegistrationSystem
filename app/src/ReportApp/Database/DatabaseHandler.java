@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
-    private static String url = "jdbc:oracle:thin:@192.168.0.122:1521:xe";
+    private static String url = "jdbc:oracle:thin:@localhost:1521:xe";
     private static String nickname = "c##bd_acc";
     private static String password = "haslo";
 
@@ -211,7 +211,7 @@ public class DatabaseHandler {
                     "JOIN Dzialy dz ON st.dzial_id = dz.id " +
                     whereString +
                     groupString + orderString;
-            System.out.println(statementText);
+//            System.out.println(statementText);
             statement = conn.prepareStatement(statementText);
 
             if (onlyPermissionType && onlyDepartment) {
@@ -226,7 +226,7 @@ public class DatabaseHandler {
 
             rs = statement.getResultSet();
 
-            System.out.println(rs);
+//            System.out.println(rs);
             if(rs == null){
                 result += "błąd";
                 return result;
@@ -279,14 +279,14 @@ public class DatabaseHandler {
 
             statementText = selectSting +
                     "FROM Konta_pracownikow kp " + orderString;
-            System.out.println(statementText);
+//            System.out.println(statementText);
             statement = conn.prepareStatement(statementText);
 
             statement.executeQuery();
 
             rs = statement.getResultSet();
 
-            System.out.println(rs);
+//            System.out.println(rs);
             if(rs == null){
                 result.add("błąd");
                 return result.toArray(new String[0]);
@@ -336,7 +336,7 @@ public class DatabaseHandler {
                     "JOIN Konta_pracownikow kp ON h.id_konta = kp.id_konta " +
                     whereString +
                     groupString + orderString;
-            System.out.println(statementText);
+//            System.out.println(statementText);
             statement = conn.prepareStatement(statementText);
 
             statement.setString(1,name);
@@ -346,7 +346,7 @@ public class DatabaseHandler {
 
             rs = statement.getResultSet();
 
-            System.out.println(rs);
+//            System.out.println(rs);
             if(rs == null){
                 result += "błąd";
                 return result;
@@ -434,7 +434,7 @@ public class DatabaseHandler {
                     "JOIN Dzialy dz ON st.dzial_id = dz.id " +
                     whereString +
                     groupString + orderString;
-            System.out.println(statementText);
+//            System.out.println(statementText);
             statement = conn.prepareStatement(statementText);
 
 
@@ -489,7 +489,7 @@ public class DatabaseHandler {
 
             rs = statement.getResultSet();
 
-            System.out.println(rs);
+//            System.out.println(rs);
             if(rs == null){
                 result += "błąd";
                 return result;
