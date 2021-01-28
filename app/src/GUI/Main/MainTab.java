@@ -65,6 +65,9 @@ public class MainTab extends JPanel
     public  MainTab()
     {
         setLayout(new FlowLayout());
+
+
+
         add(privilegesCheckBox);
         add(privilegesCheckBox2);
         add(employeesCheckBox);

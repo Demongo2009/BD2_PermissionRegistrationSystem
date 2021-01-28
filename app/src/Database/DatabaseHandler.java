@@ -1,6 +1,7 @@
 package Database;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseHandler
 {
@@ -77,6 +78,9 @@ public class DatabaseHandler
         }
     }
 
+
+
+
     public static void main(String[] args)
     {
 
@@ -136,7 +140,7 @@ public class DatabaseHandler
                     }
 
                 }
-                System.out.println("Najpopularniejsza w miesiacu "+i+"-tym czynnosc: "+maxIndex);
+                System.out.println("Najpopularniejsza w miesiacu "+i+"-tym czynnosc: "+maxIndex + " - "+max);
             }
 
             conn.close();
