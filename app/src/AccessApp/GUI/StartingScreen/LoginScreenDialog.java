@@ -1,5 +1,5 @@
 
-package ReportApp.GUI.StartingScreen;
+package AccessApp.GUI.StartingScreen;
 
 
 import javax.swing.*;

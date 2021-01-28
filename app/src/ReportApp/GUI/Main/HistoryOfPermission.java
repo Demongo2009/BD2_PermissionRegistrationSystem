@@ -11,16 +11,16 @@ import java.awt.event.ActionListener;
 
 public class HistoryOfPermission extends JPanel
 {
-//    private JCheckBox
+    //    private JCheckBox
 //            groupCheckBox = new JCheckBox("grupuj działy");
 //    private JCheckBox
 //            permissionTypeCheckBox = new JCheckBox("policz tylko zaznaczony rodzaj uprawnien");
 //    private JCheckBox
 //            departmentCheckBox = new JCheckBox("policz tylko w zaznaczonym dziale");
     String[] employeeList = {""};
-//    String[] departmentList = {"IT","Finansowy","Zarzadzanie","Marketing"};
+    //    String[] departmentList = {"IT","Finansowy","Zarzadzanie","Marketing"};
     private JComboBox employeeComboBox = new JComboBox(employeeList);
-//    private JComboBox departmentComboBox = new JComboBox(departmentList);
+    //    private JComboBox departmentComboBox = new JComboBox(departmentList);
     private JButton generateButton = new JButton("Wygeneruj Raport");
     private JButton refreshEmployeesButton = new JButton("Zaktualizuj pracowników");
     private DatabaseHandler database = new DatabaseHandler();
@@ -36,7 +36,7 @@ public class HistoryOfPermission extends JPanel
         employeeComboBox.setBounds(40,30,300,40);
         generateButton.setBounds(220,540,200,50);
         textAreaWrap.setBounds(640,30,580,600);
-        refreshEmployeesButton.setBounds(220,480,300,40);
+        refreshEmployeesButton.setBounds(220,450,200,50);
 
         add(employeeComboBox);
 //        add(departmentComboBox);

@@ -1,8 +1,9 @@
-package ReportApp.GUI.StartingScreen;
+package AccessApp.GUI.StartingScreen;
 
 
+
+import AccessApp.GUI.Main.MainWindow;
 import AccessApp.Database.DatabaseHandler;
-import ReportApp.GUI.Main.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +42,7 @@ public class StartingScreen extends JFrame
         }
         if(connection != null) {
             MainWindow app = new MainWindow(login);
-            run(app, "APLIKACJA", 1280, 720);
+            run(app, "APLIKACJA", 600, 800);
             dispose();
             return true;
         }

@@ -29,7 +29,7 @@ public class CountingActionsInMonth extends JPanel
     };
     String[] departmentList = {"IT","Finansowy","Zarzadzanie","Marketing"};
     String[] monthsList = {"Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień",
-    "Październik","Listopad","Grudzień"};
+            "Październik","Listopad","Grudzień"};
     String[] yearsList = {"2021","2020","2019","2018","2017","2016","2015","2014","2013",
             "2012","2011","2010"};
     private JComboBox actionsComboBox = new JComboBox(actionList);
